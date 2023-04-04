@@ -25,7 +25,7 @@ services:
       - alice
       - bob
     volumes:
-      - "/$PWD/reserve_prox/nginx.conf:/etc/nginx/nginx.conf"
+      - "C:\\Users\\nicol\\Desktop\\airelogic\\Airelogic\\reserve_prox\\nginx.conf:/etc/nginx/nginx.conf"
     ports:
       - 8080:80
     networks:
