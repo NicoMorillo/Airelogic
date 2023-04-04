@@ -1,0 +1,25 @@
+version: "3.7"
+
+services:
+  greeter:
+    image: flask2
+    expose:
+      - 5000
+    networks:
+      - my_project_network
+
+  nginx_prox:
+    image: prox
+    depends_on:
+      - greeter
+    volumes:
+      - ./reserve_prox/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - 8081:80
+    networks:
+      - my_project_network
+
+networks:
+  my_project_network:
+    external: false
+    name: my_project_network
