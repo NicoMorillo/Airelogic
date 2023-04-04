@@ -6,17 +6,9 @@ var1 = os.environ['NAME']
 app = Flask(__name__)
 
 
-@app.route('/')
+@app.route('/{}').format(var1)
 def hello():
-    return 'Hello, my name is ' + var1 
-
-@app.route('/Alice')
-def Alice():
-    return 'Hello, my name is Alice' 
-
-@app.route('/Bob')
-def Bob():
-    return 'Hello, my name is Bob'
+    return 'Hello, my name is ' + var1
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)
