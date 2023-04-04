@@ -8,7 +8,7 @@ services:
     expose:
       - 5000
     networks:
-      - my_project_network
+      - internal_network_1
 
   bob:
     image: flask2
@@ -17,7 +17,7 @@ services:
     expose:
       - 5000
     networks:
-      - my_project_network
+      - internal_network_1
 
   nginx_prox:
     image: prox
@@ -30,9 +30,13 @@ services:
     ports:
       - 8080:80
     networks:
-      - my_project_network
+      - internal_network_1
+      - external_network
 
 networks:
-  my_project_network:
+  external_network:
+    name: external_network
+
+  internal_network_1:
     external: false
-    name: my_project_network
+    name: internal_network_1
