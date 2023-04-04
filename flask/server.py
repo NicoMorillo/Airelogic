@@ -6,8 +6,8 @@ var1 = os.environ['NAME']
 app = Flask(__name__)
 
 
-@app.route('/{}').format(var1)
-def hello():
+@app.route('/<var1>')
+def hello(var1):
     return 'Hello, my name is ' + var1
 
 if __name__ == "__main__":
