@@ -19,5 +19,7 @@ jobs:
     
     - name: Build docker image
       uses: actions/checkout@v2
-      run: |
-        pwd
+
+    - name: check position
+      working-directory: ./flask
+      run: pwd
