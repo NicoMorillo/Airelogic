@@ -10,7 +10,7 @@ on:
         - down
 
 jobs:
-  up:
+  deploy:
 
     if: ${{ github.event.inputs.action == 'up' }}
     runs-on: ubuntu-latest
@@ -31,9 +31,22 @@ jobs:
     - name: Compose file
       run: docker-compose up -d
 
-    - name: Check the url
-      run: |
-        curl -i localhost:8080/bob
-        curl -i localhost:8080/alice
-        curl -i localhost:8080/nico
-        curl -i localhost:8080
+  test:
+    needs: deploy
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Check Bob
+      run: curl -I localhost:8080/bob
+
+    - name: Check Bob
+      run: curl -I localhost:8080/alice
+
+    - name: Check Bob
+      run: curl -I localhost:8080/nico
+
+    - name: Check Bob
+      run: curl -I localhost:8080/
+
+
