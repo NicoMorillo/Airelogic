@@ -28,5 +28,12 @@ jobs:
       working-directory: ./reverse_prox
       run: docker build -t prox .
 
-    - name: List images
-      run: docker images
+    - name: Compose file
+      run: docker-compose up -d
+
+    - name: Check the url
+      run: |
+        curl -i localhost:8080/bob
+        curl -i localhost:8080/alice
+        curl -i localhost:8080/nico
+        curl -i localhost:8080
