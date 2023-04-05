@@ -31,22 +31,16 @@ jobs:
     - name: Compose file
       run: docker-compose up -d
 
-  test:
-    needs: deploy
-    runs-on: ubuntu-latest
-
-    steps:
-
     - name: Check Bob
       run: curl -I localhost:8080/bob
 
-    - name: Check Bob
+    - name: Check Alice
       run: curl -I localhost:8080/alice
 
-    - name: Check Bob
+    - name: Check Nico
       run: curl -I localhost:8080/nico
 
-    - name: Check Bob
+    - name: Check host
       run: curl -I localhost:8080/
 
 
