@@ -1,0 +1,23 @@
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: up or down the docker process
+        requiere: true
+        type: choice
+        options:
+        - up
+        - down
+
+jobs:
+  up:
+
+    if: ${{ github.event.inputs.action == 'up' }}
+    runs-on: ubuntu-latest
+
+    steps:
+    
+    - name: Build docker image
+      uses: actions/checkout@v2
+      run: |
+        pwd
