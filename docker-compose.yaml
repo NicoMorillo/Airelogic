@@ -2,22 +2,22 @@ version: "3.7"
 
 services:
   alice:
-    image: flask2
+    image: web_py
     environment:
       - Alice
     expose:
       - 5000
     networks:
-      - internal_network_1
+      - internal_network
 
   bob:
-    image: flask2
+    image: web_py
     environment:
       - Bob
     expose:
       - 5000
     networks:
-      - internal_network_1
+      - internal_network
 
   nginx_prox:
     image: prox
@@ -25,18 +25,18 @@ services:
       - alice
       - bob
     volumes:
-      - /Users/nicolamanuelmorillomartinez/Desktop/Airelogic/reserve_prox/nginx.conf:/etc/nginx/nginx.conf
-    # - "C:\\Users\\nicol\\Desktop\\airelogic\\Airelogic\\reserve_prox\\nginx.conf:/etc/nginx/nginx.conf"
+      - /Users/nicolamanuelmorillomartinez/Desktop/Airelogic/reverse_prox/nginx.conf:/etc/nginx/nginx.conf
+    # - "C:\\Users\\nicol\\Desktop\\airelogic\\Airelogic\\reverse_prox\\nginx.conf:/etc/nginx/nginx.conf"
     ports:
       - 8080:80
     networks:
-      - internal_network_1
+      - internal_network
       - external_network
 
 networks:
   external_network:
     name: external_network
 
-  internal_network_1:
+  internal_network:
     external: false
-    name: internal_network_1
+    name: internal_network
