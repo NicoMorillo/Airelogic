@@ -27,7 +27,7 @@ services:
     volumes:
     #  - /Users/nicolamanuelmorillomartinez/Desktop/Airelogic/reverse_prox/nginx.conf:/etc/nginx/nginx.conf
     # - "C:\\Users\\nicol\\Desktop\\airelogic\\Airelogic\\reverse_prox\\nginx.conf:/etc/nginx/nginx.conf"
-      - ./Airelogic/reverse_prox/nginx.conf:/etc/nginx/nginx.conf
+      - ./reverse_prox/nginx.conf:/etc/nginx/nginx.conf
 
     ports:
       - 8080:80
