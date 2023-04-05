@@ -17,9 +17,16 @@ jobs:
 
     steps:
     
-    - name: Build docker image
+    - name: Checkout
       uses: actions/checkout@v2
 
-    - name: check position
+    - name: Build image web_py
       working-directory: ./flask
-      run: pwd
+      run: docker build -t web_py .
+
+    - name: Build image prox
+      working-directory: ./reverse_prox
+      run: docker build -t prox .
+
+    - name: List images
+      run: docker images
