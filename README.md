@@ -53,7 +53,7 @@ docker container run -d --name greeter -p 8080:8080 web_py
 3. Check the url
 > Note: $NAME need to be the same as the variable set in docker image.
 ```sh
-curl -i localhost:5000/${NAME}
+curl -i localhost:8080/nico
 ```
 
 
