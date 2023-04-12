@@ -48,7 +48,7 @@ docker image build -t web_py flask/
 2. Run the image in **docker container** in _deteach mode_: 
 ```sh
 #docker container run <detach_mode> <STDIN_open><pseudo-TTY> <name> <local_machine_port:container_port> <image_name>
-docker container run -d --name greeter -it -name proxy_cont -p 8080:5000 web_py
+docker container run -d --name greeter -it --name proxy_cont -p 8080:5000 web_py
 ```
 3. Check the url
 > Note: $NAME need to be the same as the variable set in docker image.
