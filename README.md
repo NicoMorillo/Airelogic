@@ -102,7 +102,7 @@ docker image build -t proxy reverse_prox/
 2. Run the image in **docker container** in _deteach mode_: 
 ```sh
 #docker container run <detach_mode> <STDIN_open><pseudo-TTY> <name> <local_machine_port:container_port> <image_name>
-docker container run -d --name nginx_proxy -it -p 8080:80 -v ./Airelogic/reverse_prox/nginx.conf:/etc/nginx/nginx.conf proxy
+docker container run -d --name nginx_proxy -it -p 8080:80 -v $(pwd)/Airelogic/reverse_prox/nginx.conf:/etc/nginx/nginx.conf proxy
 ```
 > Note: || -v (volume) ||  preferred mechanism for persisting data. In this case, the volume is mounted directly from our local machine (repository) to the nginx.conf file located in the nginx files configuration, allowing the file replacement.
 

@@ -4,7 +4,7 @@ services:
   alice:
     image: web_py
     environment:
-      - Alice
+      - alice
     expose:
       - 5000
     networks:
@@ -13,14 +13,14 @@ services:
   bob:
     image: web_py
     environment:
-      - Bob
+      - bob
     expose:
       - 5000
     networks:
       - internal_network
 
   nginx_prox:
-    image: prox
+    image: proxy
     depends_on:
       - alice
       - bob
