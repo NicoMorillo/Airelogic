@@ -51,9 +51,9 @@ docker image build -t web_py flask/
 docker container run -d --name greeter -p 8080:8080 web_py
 ```
 3. Check the url
-> Note: $NAME need to be the same as the variable set in docker image.
+
 ```sh
-curl -i localhost:8080/nico
+curl localhost:8080
 ```
 
 
@@ -92,9 +92,15 @@ volume**
 - Run the command to start nginx server
 
 ## Dependencies
+
+> Note: || **Before to run any dependencies** || Make sure you delete previous container runnin: 
+    ```
+    docker container rm -f greeter
+    ```
+
 To run a test for the second objetive follow the next step:
 
-1. Build the proxi server **docker image**: 
+1. Build the **docker image** proxy server: 
 ```sh
 #docker image build <tag> <image_tag> <source>
 docker image build -t proxy reverse_prox/
@@ -102,16 +108,24 @@ docker image build -t proxy reverse_prox/
 2. Run the image in **docker container** in _deteach mode_: 
 ```sh
 #docker container run <detach_mode> <STDIN_open><pseudo-TTY> <name> <local_machine_port:container_port> <image_name>
-docker container run -d --name nginx_proxy -it -p 8080:80 -v $(pwd)/Airelogic/reverse_prox/nginx.conf:/etc/nginx/nginx.conf proxy
+docker container run -d --name reverse_proxy -p 8080:80 -v $(pwd)/reverse_prox/nginx1.conf:/etc/nginx/nginx.conf proxy
 ```
 > Note: || -v (volume) ||  preferred mechanism for persisting data. In this case, the volume is mounted directly from our local machine (repository) to the nginx.conf file located in the nginx files configuration, allowing the file replacement.
 
 3. Test the NGINX container 
 
 ```sh
-curl -i localhost:8080/
+curl localhost:8080/
 ```
-
+```sh
+curl localhost:8080/alice
+```
+```sh
+curl localhost:8080/bob
+```
+```sh
+curl localhost:8080/nico
+```
 
 ## _**Objective 3: Put it all together**_
 
@@ -124,7 +138,12 @@ Create a docker-compose.yml such that, when you call docker-compose up:
 - Only the reverse-proxy should be exposed to the local network, on port **8080**
 - The two greeter instances should **not be accessible** except via **reverse-proxy**!
 
-In the main folder of the reposiroty there is a docker-compose file:
+In the main folder of the reposiroty there are a docker-compose file and volume folder:
+
+**volume folder:**
+
+- Contain the nginx configuration file needed to deploy our solution
+- The nginx.file point to the two web server created by the greeter container and to any other path redirect to 404 error.
 
 **docker-compose.yaml:**
 
@@ -135,8 +154,8 @@ In the main folder of the reposiroty there is a docker-compose file:
         | service_name | **alice** or **bob** |
         | ------ | ------ |
         | image | web_py |
-        | environment | **Alice** or **Bob** |
-        | expose_port | 5000 |
+        | environment | NAME=**alice** or NAME=**bob** |
+        | expose_port | 80800 |
         | networks| internal_network_1 |
     
     - 1 nginx_proxy instance: nginx_prox
@@ -146,10 +165,10 @@ In the main folder of the reposiroty there is a docker-compose file:
         | image | prox |
         | service_name | **nginx_proxy** |
         | depends_on | alice,  bob |
-        | volumes| ./Airelogic/reverse_prox/nginx.conf:/etc/nginx/nginx.conf |
+        | volumes| ./volume/nginx.conf:/etc/nginx/nginx.conf |
         | port | 8080 |
         | networks| internal_network_1, extenal_network|
->Note: the volume path needs to be set depending on the host OS, following the linux or windows path normative.
+
 - Declare and create networks
 
     | external_network||
@@ -162,9 +181,18 @@ In the main folder of the reposiroty there is a docker-compose file:
     | name | internal_network |
 
 ## Dependencies
+
+> Note: || **Before to run any dependencies** ||  Make sure you delete previous container runnin: 
+    ```
+    docker container rm -f reverse_proxy
+    ```
+    ```
+    docker container rm -f greeter
+    ```
+
 To run a **manual test** for the third objetive follow the next step:
 
-Make sure the two images (web_py / prox ) are already built, if not check the build-image dependencies for objectives 1 & 2.
+Make sure the two images (web_py / proxy ) are already built, if not check the build-image dependencies for objectives 1 & 2.
 
 1. Run the docker-compose file:
 ```sh
@@ -174,14 +202,14 @@ docker-compose up -d
 
 2. Test the container deployed
 ```sh
-curl -i localhost:8080/ # Http 404
+curl localhost:8080/ # Http 404
 ```
 ```sh
-curl -i localhost:8080/alice # "Hello, my name is alice"
+curl localhost:8080/alice # "Hello, my name is alice"
 ```
 ```sh
-curl -i localhost:8080/bob # "Hello, my name is Bob"
+curl localhost:8080/bob # "Hello, my name is Bob"
 ```
 ```sh
-curl -i localhost:8080/nico # Http 404
+curl localhost:8080/nico # Http 404
 ```
