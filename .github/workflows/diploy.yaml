@@ -24,9 +24,9 @@ jobs:
       working-directory: ./flask
       run: docker build -t web_py .
 
-    - name: Build image prox
+    - name: Build image proxy
       working-directory: ./reverse_prox
-      run: docker build -t prox .
+      run: docker build -t proxy .
 
     - name: Compose file
       run: docker-compose up -d
