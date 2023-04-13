@@ -32,15 +32,15 @@ jobs:
       run: docker-compose up -d
 
     - name: Check Bob
-      run: curl -I localhost:8080/bob
+      run: curl localhost:8080/bob
 
     - name: Check Alice
-      run: curl -I localhost:8080/alice
+      run: curl localhost:8080/alice
 
     - name: Check Nico
-      run: curl -I localhost:8080/nico
+      run: curl localhost:8080/nico
 
     - name: Check host
-      run: curl -I localhost:8080/
+      run: curl localhost:8080/
 
 
