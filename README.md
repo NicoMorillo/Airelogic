@@ -213,3 +213,12 @@ curl localhost:8080/bob # "Hello, my name is Bob"
 ```sh
 curl localhost:8080/nico # Http 404
 ```
+
+
+**Automated test**
+Run the following command to execute an automated test using github actions as CI/CD tool. The configuration file for this action is in the folder .github/workflows/deploy.yaml
+
+- The pipe is built to run manually the command for his execution.
+```sh
+    gh workflow run deploy.yaml -f action=up
+```
